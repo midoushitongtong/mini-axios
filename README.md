@@ -1,6 +1,6 @@
-### ts-axios
+### 使用 typescript 实现 axios
 
-##### Feaetures
+##### features
 
 - 浏览器端使用 XMLHttpRequest 对象通讯
 - 支持 Promise API
