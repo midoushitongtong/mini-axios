@@ -1,16 +1,32 @@
 import { AxiosRequestConfig } from './types/axios-config';
-import xhr from './core/xhr';
-import { buildURL } from './util/url';
+import sendXMLHttpRequest from './core/axios-xhr';
+import { buildRequestURL } from './lib/axios-url';
+import { buildRequestData } from './lib/axios-data';
+import { buildRequestHeaders } from './lib/axios-headers';
 
-// 解析 url 参数
-const transformURL = (config: AxiosRequestConfig): string => {
+// 将 params 参数转换到 url 上
+const transformRequestURL = (config: AxiosRequestConfig): string => {
   const { url, params } = config;
-  return buildURL(url, params);
+  return buildRequestURL(url, params);
 };
 
-// 处理请求的配置信息
+// 配置 headers 参数
+const transformRequestHeaders = (config: AxiosRequestConfig) => {
+  const { headers = {}, data } = config;
+  return buildRequestHeaders(headers, data);
+};
+
+// 构建 data 参数
+const transformRequestData = (config: AxiosRequestConfig) => {
+  const { data } = config;
+  return buildRequestData(data);
+};
+
+// 处理请求配置参数
 const processConfig = (config: AxiosRequestConfig): AxiosRequestConfig => {
-  config.url = transformURL(config);
+  config.url = transformRequestURL(config);
+  config.headers = transformRequestHeaders(config);
+  config.data = transformRequestData(config);
   return config;
 };
 
@@ -18,7 +34,7 @@ const processConfig = (config: AxiosRequestConfig): AxiosRequestConfig => {
 const axios = (config: AxiosRequestConfig): void => {
   config = processConfig(config);
   // 发送异步请求
-  xhr(config);
+  sendXMLHttpRequest(config);
 };
 
 export default axios;

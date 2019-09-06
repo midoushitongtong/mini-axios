@@ -5,7 +5,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 module.exports = {
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
-    port: 8080
+    port: 9000
   },
   entry: path.resolve(__dirname, 'src/index.ts'),
   output: {
@@ -26,9 +26,9 @@ module.exports = {
   },
   plugins: [
     // 将指定的 html 文件生成一个新的 html 文件
-    // new HtmlWebpackPlugin({
-    //   template: 'public/index.html'
-    // }),
-    // new CleanWebpackPlugin()
+    new HtmlWebpackPlugin({
+      template: 'public/index.html'
+    }),
+    new CleanWebpackPlugin()
   ]
 };

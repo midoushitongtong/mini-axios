@@ -1,4 +1,4 @@
-import { isDate, isObject } from './string';
+import { isDate, isPlainObject } from '../util/type-check';
 
 // 转义字符数组
 const encode = (value: string): string => {
@@ -6,7 +6,7 @@ const encode = (value: string): string => {
 };
 
 // 将参数拼接到 url 字符串
-export const buildURL = (url: string, params?: any): string => {
+export const buildRequestURL = (url: string, params?: any): string => {
   if (!params) {
     return url;
   }
@@ -36,7 +36,7 @@ export const buildURL = (url: string, params?: any): string => {
     valueList.forEach(value => {
       if (isDate(value)) {
         value = value.toISOString();
-      } else if (isObject(value)) {
+      } else if (isPlainObject(value)) {
         value = JSON.stringify(value);
       }
       // 保存处理后的请求参数
