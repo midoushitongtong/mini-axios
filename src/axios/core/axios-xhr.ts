@@ -1,6 +1,7 @@
 import { AxiosRequest, AxiosResponse, AxiosResponsePromise } from '../types/axios-config';
 import { parseResponseHeaders } from '../lib/axios-headers';
 import { parseResponseData } from '../lib/axios-data';
+import { createError } from '../lib/axios-error';
 
 const sendXMLHttpRequest = (config: AxiosRequest): AxiosResponsePromise => {
   return new Promise((resolve, reject) => {
@@ -33,17 +34,16 @@ const sendXMLHttpRequest = (config: AxiosRequest): AxiosResponsePromise => {
 
     // 处理网络错误
     request.onerror = () => {
-      reject(new Error('Network Error'));
+      reject(createError('Request failed with Network Error', config, null, request));
     };
 
     // 处理请求超时
     request.ontimeout = () => {
-      reject(new Error(`Timeout of ${timeout}ms exceed`));
+      reject(createError(`Request failed with Timeout of ${timeout}ms exceed`, config, 'ECONNABORTED', request));
     };
 
     // 处理正常响应
     request.onreadystatechange = () => {
-      console.log(request.getAllResponseHeaders());
       if (request.readyState !== 4) {
         return;
       } else {
@@ -61,7 +61,16 @@ const sendXMLHttpRequest = (config: AxiosRequest): AxiosResponsePromise => {
           config,
           request
         };
-        resolve(response);
+        // 处理状态码
+        // 注意: 这里需要延迟 1ms 让其他错误事件先处理[onerror, ontimeout]
+        setTimeout(() => {
+          if (response.status >= 200 && response.status < 300) {
+            // 正常状态码
+            resolve(response);
+          } else {
+            reject(createError(`Request failed with status code ${response.status}`, config, null, request, response));
+          }
+        }, 1);
       }
     };
 

@@ -1,5 +1,4 @@
-import axios from './axios';
-import { AxiosResponse } from './axios/types/axios-config';
+import axios, { AxiosError, AxiosResponse } from './axios';
 
 // params test
 // axios({
@@ -97,13 +96,57 @@ import { AxiosResponse } from './axios/types/axios-config';
 //   data: new URLSearchParams('q=1&w=5')
 // });
 
-axios({
-  method: 'post',
-  url: 'http://127.0.0.1',
-  data: {
-    a: 1,
-    b: 2
-  }
-}).then((res: AxiosResponse) => {
-  console.log(res);
-});
+// axios({
+//   method: 'post',
+//   url: 'http://127.0.0.1',
+//   data: {
+//     a: 1,
+//     b: 2
+//   }
+// }).then((res: AxiosResponse) => {
+//   console.log(res);
+// });
+
+// response status code test
+// axios({
+//   method: 'get',
+//   url: 'http://127.0.0.1'
+// }).then((res: AxiosResponse) => {
+//   console.log(res);
+// }).catch(e => {
+//   console.error(e);
+// });
+
+// timeout test
+// axios({
+//   method: 'get',
+//   url: 'http://127.0.0.1',
+//   params: {
+//     q: 2
+//   }
+// }).then((res: AxiosResponse) => {
+//   console.log(res);
+// }).catch(e => {
+//   console.error(e);
+// });
+
+// network test
+setTimeout(() => {
+  axios({
+    method: 'get',
+    url: 'http://127.0.0.1',
+    params: {
+      q: 2
+    }
+  }).then((res: AxiosResponse) => {
+    console.log(res);
+  }).catch((e: AxiosError) => {
+    console.error(e.message);
+    console.error(e.isError);
+    console.error(e.config);
+    console.error(e.code);
+    console.error(e.request);
+    console.error(e.response);
+  });
+}, 3000);
+
