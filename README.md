@@ -1,6 +1,6 @@
 ### 使用 typescript 实现精简版的 axios
 
-### 功能
+### features
 
 - 浏览器端使用 XMLHttpRequest 对象通讯
 - 支持 Promise API
@@ -10,5 +10,6 @@
 - JSON 格式的数据自动转换
 - 客户端防止 XSRF
 
-### 如何运行
+### 运行 和 打包
 - npm run dev
+- npm run build

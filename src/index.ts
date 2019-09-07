@@ -1,4 +1,5 @@
 import axios from './axios';
+import { AxiosResponse } from './axios/types/axios-config';
 
 // params test
 // axios({
@@ -66,32 +67,43 @@ import axios from './axios';
 // });
 
 // headers test
-axios({
-  method: 'post',
-  url: 'http://127.0.0.1',
-  data: {
-    q: 123,
-    w: 231,
-    e: 123
-  },
-  headers: {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json, text/plain, */*'
-  }
-});
+// axios({
+//   method: 'post',
+//   url: 'http://127.0.0.1',
+//   data: {
+//     q: 123,
+//     w: 231,
+//     e: 123
+//   },
+//   headers: {
+//     'Content-Type': 'application/json',
+//     'Accept': 'application/json, text/plain, */*'
+//   }
+// });
+//
+// axios({
+//   method: 'post',
+//   url: 'http://127.0.0.1',
+//   data: {
+//     q: 123,
+//     w: 231,
+//     e: 123
+//   }
+// });
+
+// axios({
+//   method: 'post',
+//   url: 'http://127.0.0.1',
+//   data: new URLSearchParams('q=1&w=5')
+// });
 
 axios({
   method: 'post',
   url: 'http://127.0.0.1',
   data: {
-    q: 123,
-    w: 231,
-    e: 123
+    a: 1,
+    b: 2
   }
-});
-
-axios({
-  method: 'post',
-  url: 'http://127.0.0.1',
-  data: new URLSearchParams('q=1&w=5')
+}).then((res: AxiosResponse) => {
+  console.log(res);
 });

@@ -1,29 +1,29 @@
-import { AxiosRequestConfig } from './types/axios-config';
+import { AxiosRequest, AxiosResponsePromise } from './types/axios-config';
 import sendXMLHttpRequest from './core/axios-xhr';
 import { buildRequestURL } from './lib/axios-url';
 import { buildRequestData } from './lib/axios-data';
 import { buildRequestHeaders } from './lib/axios-headers';
 
 // 将 params 参数转换到 url 上
-const transformRequestURL = (config: AxiosRequestConfig): string => {
+const transformRequestURL = (config: AxiosRequest): string => {
   const { url, params } = config;
   return buildRequestURL(url, params);
 };
 
 // 配置 headers 参数
-const transformRequestHeaders = (config: AxiosRequestConfig) => {
+const transformRequestHeaders = (config: AxiosRequest) => {
   const { headers = {}, data } = config;
   return buildRequestHeaders(headers, data);
 };
 
 // 构建 data 参数
-const transformRequestData = (config: AxiosRequestConfig) => {
+const transformRequestData = (config: AxiosRequest) => {
   const { data } = config;
   return buildRequestData(data);
 };
 
 // 处理请求配置参数
-const processConfig = (config: AxiosRequestConfig): AxiosRequestConfig => {
+const processConfig = (config: AxiosRequest): AxiosRequest => {
   config.url = transformRequestURL(config);
   config.headers = transformRequestHeaders(config);
   config.data = transformRequestData(config);
@@ -31,10 +31,10 @@ const processConfig = (config: AxiosRequestConfig): AxiosRequestConfig => {
 };
 
 // axios 核心对象
-const axios = (config: AxiosRequestConfig): void => {
+const axios = (config: AxiosRequest): AxiosResponsePromise => {
   config = processConfig(config);
   // 发送异步请求
-  sendXMLHttpRequest(config);
+  return sendXMLHttpRequest(config);
 };
 
 export default axios;
