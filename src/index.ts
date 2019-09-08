@@ -131,22 +131,42 @@ import axios, { AxiosError, AxiosResponse } from './axios';
 // });
 
 // network test
-setTimeout(() => {
-  axios({
-    method: 'get',
-    url: 'http://127.0.0.1',
-    params: {
-      q: 2
-    }
-  }).then((res: AxiosResponse) => {
-    console.log(res);
-  }).catch((e: AxiosError) => {
-    console.error(e.message);
-    console.error(e.isError);
-    console.error(e.config);
-    console.error(e.code);
-    console.error(e.request);
-    console.error(e.response);
-  });
-}, 3000);
+// setTimeout(() => {
+//   axios({
+//     method: 'get',
+//     url: 'http://127.0.0.1',
+//     params: {
+//       q: 2
+//     }
+//   }).then((res: AxiosResponse) => {
+//     console.log(res);
+//   }).catch((e: AxiosError) => {
+//     console.error(e.message);
+//     console.error(e.isError);
+//     console.error(e.config);
+//     console.error(e.code);
+//     console.error(e.request);
+//     console.error(e.response);
+//   });
+// }, 3000);
 
+// axios.get('http://127.0.0.1', {w: 55});
+// axios.options('http://127.0.0.1');
+// axios.head('http://127.0.0.1');
+// axios.delete('http://127.0.0.1');
+// axios.post('http://127.0.0.1', {q: 11});
+// axios.put('http://127.0.0.1', {q: 11});
+// axios.patch('http://127.0.0.1', {q: 11});
+axios('http://127.0.0.1', {
+  method: 'get',
+  params: {
+    q: 1
+  }
+});
+
+axios('http://127.0.0.1', {
+  method: 'post',
+  data: {
+    q: 1
+  }
+});

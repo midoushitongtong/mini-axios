@@ -3,6 +3,8 @@ import { parseResponseHeaders } from '../lib/axios-headers';
 import { parseResponseData } from '../lib/axios-data';
 import { createError } from '../lib/axios-error';
 
+// axios 发送请求方法
+// 不对参数做任何处理，只管发送和响应
 const sendXMLHttpRequest = (config: AxiosRequest): AxiosResponsePromise => {
   return new Promise((resolve, reject) => {
     const { data = null, url, method = 'get', headers, timeout, responseType } = config;
@@ -20,7 +22,7 @@ const sendXMLHttpRequest = (config: AxiosRequest): AxiosResponsePromise => {
     }
 
     // 设置请求方式，请求url，是否为异步
-    request.open(method.toUpperCase(), url, true);
+    request.open(method.toUpperCase(), url!, true);
 
     // 设置请求头
     Object.keys(headers).forEach(key => {

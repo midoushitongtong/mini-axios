@@ -4,9 +4,6 @@
     "tslint-config-prettier"
   ],
   "rules": {
-    "semicolon": [
-      true,
-      "always"
-    ]
+    "semicolon": [true, "always", "ignore-bound-class-methods"]
   }
 }
