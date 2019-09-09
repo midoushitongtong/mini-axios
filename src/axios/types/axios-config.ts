@@ -26,7 +26,7 @@ export interface AxiosRequest {
 }
 
 // axios 响应参数对象
-export interface AxiosResponse {
+export interface AxiosResponse<T = any> {
   data: any;
   status: number;
   statusText: string;
@@ -36,8 +36,27 @@ export interface AxiosResponse {
 }
 
 // axios 响应 promise 对象
-export interface AxiosResponsePromise extends Promise<AxiosResponse> {
+export interface AxiosResponsePromise<T = any> extends Promise<AxiosResponse<T>> {
 
+}
+
+// axios 扩展 api，主要用于简化操作
+export interface AxiosExtendAPI {
+  request: <T = any>(config?: AxiosRequest) => AxiosResponsePromise<T>;
+  head: <T = any>(url: string, config?: AxiosRequest) => AxiosResponsePromise<T>;
+  options: <T = any>(url: string, config?: AxiosRequest) => AxiosResponsePromise<T>;
+  delete: <T = any>(url: string, config?: AxiosRequest) => AxiosResponsePromise<T>;
+  get: <T = any>(url: string, params?: any, config?: AxiosRequest) => AxiosResponsePromise<T>;
+  post: <T = any>(url: string, data?: any, config?: AxiosRequest) => AxiosResponsePromise<T>;
+  put: <T = any>(url: string, data?: any, config?: AxiosRequest) => AxiosResponsePromise<T>;
+  patch: <T = any>(url: string, data?: any, config?: AxiosRequest) => AxiosResponsePromise<T>;
+}
+
+// axios 接口
+export interface AxiosInstance extends AxiosExtendAPI {
+  <T = any>(config: AxiosRequest): AxiosResponsePromise<T>;
+
+  <T = any>(url: string, config?: AxiosRequest): AxiosResponsePromise<T>;
 }
 
 // axios 错误对象
@@ -47,23 +66,4 @@ export interface AxiosError extends Error {
   code?: string | null;
   request?: any;
   response: AxiosResponse;
-}
-
-// axios 扩展 api，主要用于简化操作
-export interface AxiosExtendAPI {
-  request: (config?: AxiosRequest) => AxiosResponsePromise;
-  head: (url: string, config?: AxiosRequest) => AxiosResponsePromise;
-  options: (url: string, config?: AxiosRequest) => AxiosResponsePromise;
-  delete: (url: string, config?: AxiosRequest) => AxiosResponsePromise;
-  get: (url: string, params?: any, config?: AxiosRequest) => AxiosResponsePromise;
-  post: (url: string, data?: any, config?: AxiosRequest) => AxiosResponsePromise;
-  put: (url: string, data?: any, config?: AxiosRequest) => AxiosResponsePromise;
-  patch: (url: string, data?: any, config?: AxiosRequest) => AxiosResponsePromise;
-}
-
-// axios 接口
-export interface AxiosInstance extends AxiosExtendAPI {
-  (config: AxiosRequest): AxiosResponsePromise;
-
-  (url: string, config?: AxiosRequest): AxiosResponsePromise;
 }

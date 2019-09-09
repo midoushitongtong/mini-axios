@@ -150,6 +150,7 @@ import axios, { AxiosError, AxiosResponse } from './axios';
 //   });
 // }, 3000);
 
+// extend tests
 // axios.get('http://127.0.0.1', {w: 55});
 // axios.options('http://127.0.0.1');
 // axios.head('http://127.0.0.1');
@@ -157,16 +158,47 @@ import axios, { AxiosError, AxiosResponse } from './axios';
 // axios.post('http://127.0.0.1', {q: 11});
 // axios.put('http://127.0.0.1', {q: 11});
 // axios.patch('http://127.0.0.1', {q: 11});
-axios('http://127.0.0.1', {
-  method: 'get',
-  params: {
-    q: 1
-  }
-});
 
-axios('http://127.0.0.1', {
-  method: 'post',
-  data: {
-    q: 1
-  }
-});
+// override test
+// axios('http://127.0.0.1', {
+//   method: 'get',
+//   params: {
+//     q: 1
+//   }
+// });
+//
+// axios('http://127.0.0.1', {
+//   method: 'post',
+//   data: {
+//     q: 1
+//   }
+// });
+
+// generic test
+// interface ResponseData<T = any> {
+//   code: number;
+//   message: string;
+//   result: T;
+// }
+//
+// interface User {
+//   name: string;
+//   age: number;
+// }
+//
+// const getUser = <T>() => {
+//   return axios<ResponseData<T>>('http://127.0.0.1?q=1')
+//     .then((res: any) => res.data)
+//     .catch((err: any) => console.log(err));
+// };
+//
+// const test = async () => {
+//   const user: ResponseData = await getUser<User>();
+//   if (user) {
+//     console.log(user.result.name);
+//   }
+// };
+
+// test();
+
+
