@@ -195,10 +195,28 @@ import axios, { AxiosError, AxiosResponse } from './axios';
 // const test = async () => {
 //   const user: ResponseData = await getUser<User>();
 //   if (user) {
-//     console.log(user.result.name);
+//     console.log(user.result.nam);
 //   }
 // };
 
 // test();
 
+// interceptor test
+axios.interceptors.request.use(config => {
+  config.headers.test = '1';
+  return config;
+});
+
+axios.interceptors.response.use(response => {
+  return response;
+});
+
+axios({
+  method: 'get',
+  url: 'http://127.0.0.1',
+  headers: {
+    q: '1'
+  }
+})
+  .then(res => console.log(res));
 

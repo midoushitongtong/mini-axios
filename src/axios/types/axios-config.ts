@@ -42,6 +42,10 @@ export interface AxiosResponsePromise<T = any> extends Promise<AxiosResponse<T>>
 
 // axios 扩展 api，主要用于简化操作
 export interface AxiosExtendAPI {
+  interceptors: {
+    request: AxiosInterceptorManagerInterface<AxiosRequest>,
+    response: AxiosInterceptorManagerInterface<AxiosResponse>
+  };
   request: <T = any>(config?: AxiosRequest) => AxiosResponsePromise<T>;
   head: <T = any>(url: string, config?: AxiosRequest) => AxiosResponsePromise<T>;
   options: <T = any>(url: string, config?: AxiosRequest) => AxiosResponsePromise<T>;
@@ -66,4 +70,19 @@ export interface AxiosError extends Error {
   code?: string | null;
   request?: any;
   response: AxiosResponse;
+}
+
+// 拦截器
+export interface AxiosInterceptorManagerInterface<T> {
+  use: (resolveFn: ResolveFn<T>, rejectFn?: RejectFn) => void;
+
+  eject: (id: number) => void;
+}
+
+export interface ResolveFn<T> {
+  (val: T): T | Promise<T>;
+}
+
+export interface RejectFn {
+  (error: any): any;
 }

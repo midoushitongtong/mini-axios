@@ -1,8 +1,34 @@
 import axiosDispatchRequest from './axios-dispatch-request';
-import { AxiosRequest, AxiosResponsePromise, Method, AxiosExtendAPI } from '../types/axios-config';
+import {
+  AxiosRequest,
+  AxiosResponsePromise,
+  Method,
+  AxiosResponse, ResolveFn, RejectFn
+} from '../types/axios-config';
+import AxiosInterceptorManager from './axios-interceptor-manager';
+
+interface Interceptors {
+  request: AxiosInterceptorManager<AxiosRequest>;
+  response: AxiosInterceptorManager<AxiosResponse>;
+}
+
+interface PromiseChain<T> {
+  resolveFn: ResolveFn<T | ((config: AxiosRequest) => AxiosResponsePromise)>;
+  rejectFn?: RejectFn;
+}
 
 // axios 函数扩展类
-class AxiosExtend implements AxiosExtendAPI {
+class AxiosExtend {
+  // 拦截器
+  interceptors: Interceptors;
+
+  constructor() {
+    this.interceptors = {
+      request: new AxiosInterceptorManager<AxiosRequest>(),
+      response: new AxiosInterceptorManager<AxiosResponse>()
+    };
+  }
+
   request = (url: any, config?: any): AxiosResponsePromise => {
     // axios 核心函数的两种参数处理
     if (typeof url === 'string') {
@@ -13,7 +39,31 @@ class AxiosExtend implements AxiosExtendAPI {
     } else {
       config = url;
     }
-    return axiosDispatchRequest(config);
+
+    const chain: PromiseChain<any>[] = [{
+      resolveFn: axiosDispatchRequest,
+      rejectFn: undefined
+    }];
+
+    // 获取拦截器，请求的先执行
+    this.interceptors.request.forEachInterceptor(interceptor => {
+      chain.unshift(interceptor);
+    });
+
+    // 获取拦截器，响应的后执行
+    this.interceptors.response.forEachInterceptor(interceptor => {
+      chain.push(interceptor);
+    });
+
+    let promise = Promise.resolve(config);
+
+    while (chain.length) {
+      const { resolveFn, rejectFn } = chain.shift()!;
+      promise = promise.then(resolveFn, rejectFn);
+    }
+
+    // promise 链式调用机制
+    return promise;
   };
 
   head = (url: string, config?: AxiosRequest): AxiosResponsePromise => {
