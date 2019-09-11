@@ -2,7 +2,7 @@ import { AxiosRequest, AxiosResponsePromise } from '../types/axios-config';
 import sendXMLHttpRequest from './axios-xhr';
 import { buildRequestURL } from '../lib/axios-url';
 import { buildRequestData } from '../lib/axios-data';
-import { buildRequestHeaders } from '../lib/axios-headers';
+import { buildRequestHeaders, flattenHeaders } from '../lib/axios-headers';
 
 // 将 params 参数转换到 url 上
 const transformRequestURL = (config: AxiosRequest): string => {
@@ -27,6 +27,8 @@ const processConfig = (config: AxiosRequest): AxiosRequest => {
   config.url = transformRequestURL(config);
   config.headers = transformRequestHeaders(config);
   config.data = transformRequestData(config);
+  // 对 headers 对象进行删除层级处理
+  config.headers = flattenHeaders(config.headers, config.method!);
   return config;
 };
 

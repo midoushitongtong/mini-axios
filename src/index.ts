@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from './axios';
+import qs from 'qs';
 
 // params test
 // axios({
@@ -202,21 +203,32 @@ import axios, { AxiosError, AxiosResponse } from './axios';
 // test();
 
 // interceptor test
-axios.interceptors.request.use(config => {
-  config.headers.test = '1';
-  return config;
-});
+// axios.interceptors.request.use(config => {
+//   config.headers.test = '1';
+//   return config;
+// });
+//
+// axios.interceptors.response.use(response => {
+//   return response;
+// });
+//
+// axios({
+//   method: 'get',
+//   url: 'http://127.0.0.1',
+//   headers: {
+//     q: '1'
+//   }
+// })
+//   .then(res => console.log(res));
 
-axios.interceptors.response.use(response => {
-  return response;
-});
-
+axios.defaults.headers.common['test1'] = 1;
 axios({
-  method: 'get',
+  method: 'post',
   url: 'http://127.0.0.1',
   headers: {
     q: '1'
-  }
-})
-  .then(res => console.log(res));
-
+  },
+  data: qs.stringify({
+    a: 1
+  })
+});

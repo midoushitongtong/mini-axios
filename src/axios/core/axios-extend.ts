@@ -6,6 +6,7 @@ import {
   AxiosResponse, ResolveFn, RejectFn
 } from '../types/axios-config';
 import AxiosInterceptorManager from './axios-interceptor-manager';
+import mergeConfig from '../lib/axios-merge-config';
 
 interface Interceptors {
   request: AxiosInterceptorManager<AxiosRequest>;
@@ -19,10 +20,15 @@ interface PromiseChain<T> {
 
 // axios 函数扩展类
 class AxiosExtend {
+  // 默认配置
+  defaults: AxiosRequest;
+
   // 拦截器
   interceptors: Interceptors;
 
-  constructor() {
+  constructor(axiosDefaultConfig: AxiosRequest) {
+    // 初始化
+    this.defaults = axiosDefaultConfig;
     this.interceptors = {
       request: new AxiosInterceptorManager<AxiosRequest>(),
       response: new AxiosInterceptorManager<AxiosResponse>()
@@ -39,6 +45,8 @@ class AxiosExtend {
     } else {
       config = url;
     }
+
+    config = mergeConfig(this.defaults, config);
 
     const chain: PromiseChain<any>[] = [{
       resolveFn: axiosDispatchRequest,

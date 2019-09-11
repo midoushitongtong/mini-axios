@@ -1,4 +1,6 @@
 import { isPlainObject } from '../util/type-check';
+import { Method } from '..';
+import deepMerge from '../util/deep-merge';
 
 // 将请求头的 key 标准化
 const normalizeHeaderName = (headers: any, normalizeHeaderName: string): void => {
@@ -48,4 +50,17 @@ export const parseResponseHeaders = (headers: string): any => {
     parseHeaders[key] = value;
   });
   return parseHeaders;
+};
+
+export const flattenHeaders = (headers: any, method: Method) => {
+  if (!headers) {
+    return headers;
+  }
+  headers = deepMerge(headers.common, headers[method], headers);
+  // 需要取出层级的属性
+  const methodToDelete = ['delete', 'get', 'head', 'options', 'post', 'put', 'patch', 'common'];
+  methodToDelete.forEach(method => {
+    delete headers[method];
+  });
+  return headers;
 };

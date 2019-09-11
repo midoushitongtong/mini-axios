@@ -23,6 +23,9 @@ export interface AxiosRequest {
   headers?: any;
   timeout?: number;
   responseType?: XMLHttpRequestResponseType;
+
+  // 字符出索引签名
+  [propName: string]: any;
 }
 
 // axios 响应参数对象
@@ -42,6 +45,7 @@ export interface AxiosResponsePromise<T = any> extends Promise<AxiosResponse<T>>
 
 // axios 扩展 api，主要用于简化操作
 export interface AxiosExtendAPI {
+  defaults: AxiosRequest;
   interceptors: {
     request: AxiosInterceptorManagerInterface<AxiosRequest>,
     response: AxiosInterceptorManagerInterface<AxiosResponse>
