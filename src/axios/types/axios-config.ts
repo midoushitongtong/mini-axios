@@ -99,3 +99,8 @@ export interface RejectFn {
 export interface AxiosTransform {
   (data: any, headers: any): any;
 }
+
+// axios 实例
+export interface AxiosStatic extends AxiosInstance {
+  create(config?: AxiosRequest): AxiosInstance;
+}

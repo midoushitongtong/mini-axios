@@ -7,7 +7,7 @@ const strategyKeyList = Object.create(null);
 
 // 默认策略
 const defaultStrategy = (val1: any, val2: any): any => {
-  return typeof val1 !== 'undefined' ? val2 : val1;
+  return typeof val2 !== 'undefined' ? val2 : val1;
 };
 
 // val2 优先策略
@@ -25,7 +25,7 @@ const deepMergeStrategy = (val1: any, val2: any): any => {
     return val2;
   } else if (isPlainObject(val1)) {
     return deepMerge(val1);
-  } else if (typeof val1 !== 'undefined') {
+  } else if (typeof val1 === 'undefined') {
     return val1;
   }
 };

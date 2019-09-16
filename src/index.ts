@@ -84,11 +84,14 @@ import qs from 'qs';
 // axios({
 //   method: 'post',
 //   url: 'http://127.0.0.1',
-//   data: {
+//   headers: {
+//     'Content-Type': 'application/x-www-form-urlencoded'
+//   },
+//   data: qs.stringify({
 //     q: 123,
 //     w: 231,
 //     e: 123
-//   }
+//   })
 // });
 
 // axios({
@@ -234,12 +237,31 @@ import qs from 'qs';
 // });
 
 // transform test
-axios({
-  method: 'post',
-  url: 'http://127.0.0.1',
-  data: {
-    q: 1
-  },
+// axios({
+//   method: 'post',
+//   url: 'http://127.0.0.1',
+//   data: {
+//     q: 1
+//   },
+//   transformRequest: [
+//     (data) => {
+//       return qs.stringify(data);
+//     },
+//     ...axios.defaults.transformRequest as AxiosTransform[]
+//   ],
+//   transformResponse: [
+//     ...axios.defaults.transformResponse as AxiosTransform[],
+//     (data) => {
+//       if (typeof data === 'object') {
+//         data.b = 2;
+//       }
+//       return data;
+//     }
+//   ]
+// }).then(res => console.log(res));
+
+// instance test
+const instance = axios.create({
   transformRequest: [
     (data) => {
       return qs.stringify(data);
@@ -255,4 +277,23 @@ axios({
       return data;
     }
   ]
+});
+
+instance({
+  url: 'http://127.0.0.1',
+  method: 'post',
+  data: {
+    q: 1
+  }
+}).then(res => console.log(res));
+
+axios({
+  url: 'http://127.0.0.1',
+  method: 'post',
+  data: qs.stringify({
+    q: 2
+  }),
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded'
+  }
 }).then(res => console.log(res));
