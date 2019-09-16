@@ -1,4 +1,6 @@
 import { AxiosRequest } from '../types/axios-config';
+import { buildRequestHeaders } from '../lib/axios-headers';
+import { buildRequestData, parseResponseData } from '../lib/axios-data';
 
 const defaultsConfig: AxiosRequest = {
   method: 'get',
@@ -7,7 +9,18 @@ const defaultsConfig: AxiosRequest = {
     common: {
       Accept: 'application/json, text/plain, */*'
     }
-  }
+  },
+  transformRequest: [
+    (data: any, headers: any): any => {
+      buildRequestHeaders(headers, data);
+      return buildRequestData(data);
+    }
+  ],
+  transformResponse: [
+    (data: any): any => {
+      return parseResponseData(data);
+    }
+  ]
 };
 
 // 没有 data 的请求方式

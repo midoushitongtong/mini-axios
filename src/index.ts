@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosResponse } from './axios';
+import axios, { AxiosError, AxiosResponse, AxiosTransform } from './axios';
 import qs from 'qs';
 
 // params test
@@ -221,14 +221,38 @@ import qs from 'qs';
 // })
 //   .then(res => console.log(res));
 
-axios.defaults.headers.common['test1'] = 1;
+// axios.defaults.headers.common['test1'] = 1;
+// axios({
+//   method: 'post',
+//   url: 'http://127.0.0.1',
+//   headers: {
+//     q: '1'
+//   },
+//   data: qs.stringify({
+//     a: 1
+//   })
+// });
+
+// transform test
 axios({
   method: 'post',
   url: 'http://127.0.0.1',
-  headers: {
-    q: '1'
+  data: {
+    q: 1
   },
-  data: qs.stringify({
-    a: 1
-  })
-});
+  transformRequest: [
+    (data) => {
+      return qs.stringify(data);
+    },
+    ...axios.defaults.transformRequest as AxiosTransform[]
+  ],
+  transformResponse: [
+    ...axios.defaults.transformResponse as AxiosTransform[],
+    (data) => {
+      if (typeof data === 'object') {
+        data.b = 2;
+      }
+      return data;
+    }
+  ]
+}).then(res => console.log(res));

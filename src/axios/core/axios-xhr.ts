@@ -49,17 +49,13 @@ const sendXMLHttpRequest = (config: AxiosRequest): AxiosResponsePromise => {
       if (request.readyState !== 4) {
         return;
       } else {
-        // 解析响应头
-        const responseHeaders = parseResponseHeaders(request.getAllResponseHeaders());
-        // 解析响应数据
-        const responseData = parseResponseData(responseType === 'text'
-          ? request.responseText
-          : request.response);
         const response: AxiosResponse = {
-          data: responseData,
+          data: responseType === 'text'
+            ? request.responseText
+            : request.response,
           status: request.status,
           statusText: request.statusText,
-          headers: responseHeaders,
+          headers: request.getAllResponseHeaders(),
           config,
           request
         };

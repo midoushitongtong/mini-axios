@@ -103,7 +103,6 @@ class AxiosExtend {
   };
 
   _requestWithoutData = (method: Method, url: string, config?: AxiosRequest): AxiosResponsePromise => {
-    console.log(config);
     return this.request(Object.assign(config || {}, {
       method,
       url

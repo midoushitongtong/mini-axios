@@ -5,6 +5,7 @@ import { extend } from '../util/extend';
 
 const createInstance = (axiosDefaultConfig: AxiosRequest): AxiosInstance => {
   // axios 核心函数扩展类, 包含扩展的方法
+  // 传入默认配置
   const context = new AxiosExtend(axiosDefaultConfig);
 
   // axios 核心的函数

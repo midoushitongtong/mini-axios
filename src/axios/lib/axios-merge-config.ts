@@ -69,8 +69,6 @@ const mergeConfig = (config1: AxiosRequest, config2?: AxiosRequest): AxiosReques
     }
   }
 
-  console.log(config);
-
   return config;
 };
 

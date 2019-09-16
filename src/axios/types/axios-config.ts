@@ -23,7 +23,11 @@ export interface AxiosRequest {
   headers?: any;
   timeout?: number;
   responseType?: XMLHttpRequestResponseType;
+  transformRequest?: AxiosTransform | AxiosTransform[];
+  transformResponse?: AxiosTransform | AxiosTransform[];
 
+
+  // 用于合并默认配置
   // 字符出索引签名
   [propName: string]: any;
 }
@@ -76,7 +80,7 @@ export interface AxiosError extends Error {
   response: AxiosResponse;
 }
 
-// 拦截器
+// axios 拦截器
 export interface AxiosInterceptorManagerInterface<T> {
   use: (resolveFn: ResolveFn<T>, rejectFn?: RejectFn) => void;
 
@@ -89,4 +93,9 @@ export interface ResolveFn<T> {
 
 export interface RejectFn {
   (error: any): any;
+}
+
+// axios 转换数据
+export interface AxiosTransform {
+  (data: any, headers: any): any;
 }
