@@ -25,7 +25,7 @@ export interface AxiosRequest {
   responseType?: XMLHttpRequestResponseType;
   transformRequest?: AxiosTransform | AxiosTransform[];
   transformResponse?: AxiosTransform | AxiosTransform[];
-
+  cancelToken?: CancelToken;
 
   // 用于合并默认配置
   // 字符出索引签名
@@ -102,5 +102,46 @@ export interface AxiosTransform {
 
 // axios 实例
 export interface AxiosStatic extends AxiosInstance {
-  create(config?: AxiosRequest): AxiosInstance;
+  create: (config?: AxiosRequest) => AxiosInstance;
+
+  CancelToken: CancelTokenStatic;
+  Cancel: CancelStatic;
+  isCancel: (value: any) => boolean;
+}
+
+// axios 取消请求
+export interface CancelToken {
+  promise: Promise<Cancel>;
+  reason?: Cancel;
+  throwIfRequest: () => void;
+}
+
+export interface CancelHandler {
+  (message?: string): void;
+}
+
+export interface CancelExecutor {
+  (cancel: CancelHandler): void;
+}
+
+export interface CancelTokenSource {
+  // cancel token 对象
+  token: CancelToken;
+  // cancel 处理的方法
+  cancel: CancelHandler;
+}
+
+// 类类型
+export interface CancelTokenStatic {
+  new(executor: CancelExecutor): CancelToken;
+
+  source: () => CancelTokenSource;
+}
+
+export interface Cancel {
+  message?: string;
+}
+
+export interface CancelStatic {
+  new(message?: string): Cancel;
 }

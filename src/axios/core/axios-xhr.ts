@@ -1,13 +1,11 @@
 import { AxiosRequest, AxiosResponse, AxiosResponsePromise } from '../types/axios-config';
-import { parseResponseHeaders } from '../lib/axios-headers';
-import { parseResponseData } from '../lib/axios-data';
 import { createError } from '../lib/axios-error';
 
 // axios 发送请求方法
 // 不对参数做任何处理，只管发送和响应
-const sendXMLHttpRequest = (config: AxiosRequest): AxiosResponsePromise => {
+const axiosXhr = (config: AxiosRequest): AxiosResponsePromise => {
   return new Promise((resolve, reject) => {
-    const { data = null, url, method = 'get', headers, timeout, responseType } = config;
+    const { data = null, url, method = 'get', headers, timeout, responseType, cancelToken } = config;
 
     const request = new XMLHttpRequest();
 
@@ -73,8 +71,16 @@ const sendXMLHttpRequest = (config: AxiosRequest): AxiosResponsePromise => {
     };
 
     // 发送请求
+    // 发送前判断
+    if (cancelToken) {
+      cancelToken.promise.then(reason => {
+        // 请求成功 abort 就无意义了
+        request.abort();
+        reject(reason);
+      });
+    }
     request.send(data);
   });
 };
 
-export default sendXMLHttpRequest;
+export default axiosXhr;

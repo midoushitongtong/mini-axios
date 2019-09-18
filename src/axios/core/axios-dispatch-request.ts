@@ -25,9 +25,18 @@ const processResponseResult = (res: AxiosResponse): AxiosResponse => {
   return res;
 };
 
+// axios 请求前判断是否取消请求
+// 如果有就不发送请求
+const throwIfCancelRequest = (config: AxiosRequest): void => {
+  if (config.cancelToken) {
+    config.cancelToken.throwIfRequest();
+  }
+};
+
 // axios 核心的函数
 // 主要功能：解析参数以及发送请求到服务器
 const axiosDispatchRequest = (config: AxiosRequest): AxiosResponsePromise => {
+  throwIfCancelRequest(config);
   config = processRequestConfig(config);
   // 发送异步请求
   return sendXMLHttpRequest(config).then(res => {

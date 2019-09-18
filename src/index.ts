@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosResponse, AxiosTransform } from './axios';
+import axios, { AxiosError, AxiosResponse, AxiosTransform, CancelHandler } from './axios';
 import qs from 'qs';
 
 // params test
@@ -261,39 +261,83 @@ import qs from 'qs';
 // }).then(res => console.log(res));
 
 // instance test
-const instance = axios.create({
-  transformRequest: [
-    (data) => {
-      return qs.stringify(data);
-    },
-    ...axios.defaults.transformRequest as AxiosTransform[]
-  ],
-  transformResponse: [
-    ...axios.defaults.transformResponse as AxiosTransform[],
-    (data) => {
-      if (typeof data === 'object') {
-        data.b = 2;
-      }
-      return data;
-    }
-  ]
-});
+// const instance = axios.create({
+//   transformRequest: [
+//     (data) => {
+//       return qs.stringify(data);
+//     },
+//     ...axios.defaults.transformRequest as AxiosTransform[]
+//   ],
+//   transformResponse: [
+//     ...axios.defaults.transformResponse as AxiosTransform[],
+//     (data) => {
+//       if (typeof data === 'object') {
+//         data.b = 2;
+//       }
+//       return data;
+//     }
+//   ]
+// });
+//
+// instance({
+//   url: 'http://127.0.0.1',
+//   method: 'post',
+//   data: {
+//     q: 1
+//   }
+// }).then(res => console.log(res));
+//
+// axios({
+//   url: 'http://127.0.0.1',
+//   method: 'post',
+//   data: qs.stringify({
+//     q: 2
+//   }),
+//   headers: {
+//     'Content-Type': 'application/x-www-form-urlencoded'
+//   }
+// }).then(res => console.log(res));
 
-instance({
-  url: 'http://127.0.0.1',
-  method: 'post',
-  data: {
-    q: 1
-  }
-}).then(res => console.log(res));
-
+const CancelToken = axios.CancelToken;
+const source = CancelToken.source();
 axios({
   url: 'http://127.0.0.1',
-  method: 'post',
-  data: qs.stringify({
-    q: 2
-  }),
-  headers: {
-    'Content-Type': 'application/x-www-form-urlencoded'
+  cancelToken: source.token
+}).catch(e => {
+  if (axios.isCancel(e)) {
+    console.log(e);
   }
-}).then(res => console.log(res));
+});
+
+setTimeout(() => {
+  source.cancel('取消请求');
+  axios({
+    url: 'http://127.0.0.1',
+    method: 'post',
+    data: qs.stringify({
+      a: 1
+    }),
+    cancelToken: source.token
+  }).catch(e => {
+    if (axios.isCancel(e)) {
+      console.log(e);
+    }
+  });
+}, 1000);
+
+let cancelHandler: CancelHandler;
+axios({
+  url: 'http://127.0.0.1',
+  method: 'get',
+  cancelToken: new CancelToken(c => {
+    cancelHandler = c;
+  })
+}).catch(e => {
+  if (axios.isCancel(e)) {
+    console.log(e);
+  }
+});
+
+setTimeout(() => {
+  cancelHandler('取消请求');
+}, 1100);

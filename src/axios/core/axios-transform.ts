@@ -1,6 +1,6 @@
 import { AxiosTransform } from '..';
 
-const transform = (data: any, headers: any, fns?: AxiosTransform | AxiosTransform[]): any => {
+const axiosTransform = (data: any, headers: any, fns?: AxiosTransform | AxiosTransform[]): any => {
   if (!fns) {
     return data;
   }
@@ -15,4 +15,4 @@ const transform = (data: any, headers: any, fns?: AxiosTransform | AxiosTransfor
   return data;
 };
 
-export default transform;
+export default axiosTransform;
