@@ -26,6 +26,9 @@ export interface AxiosRequest {
   transformRequest?: AxiosTransform | AxiosTransform[];
   transformResponse?: AxiosTransform | AxiosTransform[];
   cancelToken?: CancelToken;
+  withCredentials?: boolean;
+  xsrfCookieName?: string;
+  xsrfHeaderName?: string;
 
   // 用于合并默认配置
   // 字符出索引签名

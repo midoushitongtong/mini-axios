@@ -298,46 +298,62 @@ import qs from 'qs';
 //   }
 // }).then(res => console.log(res));
 
-const CancelToken = axios.CancelToken;
-const source = CancelToken.source();
-axios({
-  url: 'http://127.0.0.1',
-  cancelToken: source.token
-}).catch(e => {
-  if (axios.isCancel(e)) {
-    console.log(e);
-  }
-});
+// const CancelToken = axios.CancelToken;
+// const source = CancelToken.source();
+// axios({
+//   url: 'http://127.0.0.1',
+//   cancelToken: source.token
+// }).catch(e => {
+//   if (axios.isCancel(e)) {
+//     console.log(e);
+//   }
+// });
+//
+// setTimeout(() => {
+//   source.cancel('取消请求');
+//   axios({
+//     url: 'http://127.0.0.1',
+//     method: 'post',
+//     data: qs.stringify({
+//       a: 1
+//     }),
+//     cancelToken: source.token
+//   }).catch(e => {
+//     if (axios.isCancel(e)) {
+//       console.log(e);
+//     }
+//   });
+// }, 1000);
+//
+// let cancelHandler: CancelHandler;
+// axios({
+//   url: 'http://127.0.0.1',
+//   method: 'get',
+//   cancelToken: new CancelToken(c => {
+//     cancelHandler = c;
+//   })
+// }).catch(e => {
+//   if (axios.isCancel(e)) {
+//     console.log(e);
+//   }
+// });
+//
+// setTimeout(() => {
+//   cancelHandler('取消请求');
+// }, 1100);
 
-setTimeout(() => {
-  source.cancel('取消请求');
-  axios({
-    url: 'http://127.0.0.1',
-    method: 'post',
-    data: qs.stringify({
-      a: 1
-    }),
-    cancelToken: source.token
-  }).catch(e => {
-    if (axios.isCancel(e)) {
-      console.log(e);
-    }
-  });
-}, 1000);
+// 跨域 cookie test
+// axios({
+//   method: 'get',
+//   url: 'http://127.0.0.1',
+//   withCredentials: true
+// });
 
-let cancelHandler: CancelHandler;
+// 跨域请求伪造
 axios({
-  url: 'http://127.0.0.1',
   method: 'get',
-  cancelToken: new CancelToken(c => {
-    cancelHandler = c;
-  })
-}).catch(e => {
-  if (axios.isCancel(e)) {
-    console.log(e);
-  }
+  url: 'http://127.0.0.1',
+  withCredentials: true,
+  xsrfCookieName: 'XSRF-TOKEN-1',
+  xsrfHeaderName: 'X-XSRF-TOKEN-1'
 });
-
-setTimeout(() => {
-  cancelHandler('取消请求');
-}, 1100);

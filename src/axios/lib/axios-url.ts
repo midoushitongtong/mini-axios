@@ -1,5 +1,10 @@
 import { isDate, isPlainObject } from '../util/type-check';
 
+interface URLOrigin {
+  protocol: string;
+  host: string;
+}
+
 // 转义字符数组
 const encode = (value: string): string => {
   return encodeURIComponent(value);
@@ -59,4 +64,24 @@ export const buildRequestURL = (url: string, params?: any): string => {
     url += serializedParams;
   }
   return url;
+};
+
+// 根据 url 参数解析端口以及主机地址
+const URLParseNode = document.createElement('a');
+const resolveUrl = (url: string): URLOrigin => {
+  URLParseNode.setAttribute('href', url);
+  const { protocol, host } = URLParseNode;
+  return {
+    protocol,
+    host
+  };
+};
+
+// 当前页面的 url
+const currentOrigin = resolveUrl(window.location.href);
+
+// 根据 url 参数判断是否属于一个域名下
+export const isURLSameOrigin = (requestURL: string): boolean => {
+  const parsedOrigin = resolveUrl(requestURL);
+  return (parsedOrigin.protocol === currentOrigin.protocol && parsedOrigin.host === currentOrigin.host);
 };

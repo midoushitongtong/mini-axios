@@ -20,7 +20,9 @@ const axiosDefaultsConfig: AxiosRequest = {
     (data: any): any => {
       return parseResponseData(data);
     }
-  ]
+  ],
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN'
 };
 
 // 没有 data 的请求方式
