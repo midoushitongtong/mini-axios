@@ -29,6 +29,8 @@ export interface AxiosRequest {
   withCredentials?: boolean;
   xsrfCookieName?: string;
   xsrfHeaderName?: string;
+  onDownloadProgress?:(e: ProgressEvent) => void;
+  onUploadProgress?: (e: ProgressEvent) => void;
 
   // 用于合并默认配置
   // 字符出索引签名
