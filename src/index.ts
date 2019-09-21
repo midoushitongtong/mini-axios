@@ -359,56 +359,64 @@ import qs from 'qs';
 // });
 
 // test file download and upload
-const axiosInstance = axios.create();
+// const axiosInstance = axios.create();
+//
+// const calculatorPercentage = (current: number, total: number) => {
+//   return Math.floor((current / total) * 100);
+// };
+//
+// const uploadPercentageElem = document.querySelector('.upload-percentage');
+//
+// // 监听上传 / 下载相关事件
+// const loadProgressBar = () => {
+//   const setupStartProgress = () => {
+//     axiosInstance.interceptors.request.use(config => {
+//       uploadPercentageElem!.innerHTML = '0%';
+//       return config;
+//     });
+//   };
+//   const setupUpdateProgress = () => {
+//     axiosInstance.defaults.onDownloadProgress = e => {
+//       uploadPercentageElem!.innerHTML = calculatorPercentage(e.loaded, e.total) + '%';
+//     };
+//     axiosInstance.defaults.onUploadProgress = e => {
+//       uploadPercentageElem!.innerHTML = calculatorPercentage(e.loaded, e.total) + '%';
+//     };
+//   };
+//   const setupStopProgress = () => {
+//     axiosInstance.interceptors.response.use(config => {
+//       uploadPercentageElem!.innerHTML = '100%';
+//       return config;
+//     });
+//   };
+//   setupStartProgress();
+//   setupUpdateProgress();
+//   setupStopProgress();
+// };
+// loadProgressBar();
+//
+// // 下载
+// const fileDownloadElem = document.querySelector('.file-download');
+// fileDownloadElem!.addEventListener('click', e => {
+//   axiosInstance.get('http://yyccyy-01.oss-cn-shenzhen.aliyuncs.com/collection/preview-image/rc-upload-1568974827361-2');
+// });
+//
+// // 上传
+// const fileUploadElem = document.querySelector('.file-upload');
+// fileUploadElem!.addEventListener('click', e => {
+//   const data = new FormData();
+//   const fileElem = document.querySelector('input[name="file"]') as HTMLInputElement;
+//   if (fileElem.files) {
+//     data.append('file', fileElem.files[0]);
+//     axiosInstance.post('http://127.0.0.1/upload.php', data);
+//   }
+// });
 
-const calculatorPercentage = (current: number, total: number) => {
-  return Math.floor((current / total) * 100);
-};
-
-const uploadPercentageElem = document.querySelector('.upload-percentage');
-
-// 监听上传 / 下载相关事件
-const loadProgressBar = () => {
-  const setupStartProgress = () => {
-    axiosInstance.interceptors.request.use(config => {
-      uploadPercentageElem!.innerHTML = '0%';
-      return config;
-    });
-  };
-  const setupUpdateProgress = () => {
-    axiosInstance.defaults.onDownloadProgress = e => {
-      uploadPercentageElem!.innerHTML = calculatorPercentage(e.loaded, e.total) + '%';
-    };
-    axiosInstance.defaults.onUploadProgress = e => {
-      uploadPercentageElem!.innerHTML = calculatorPercentage(e.loaded, e.total) + '%';
-    };
-  };
-  const setupStopProgress = () => {
-    axiosInstance.interceptors.response.use(config => {
-      uploadPercentageElem!.innerHTML = '100%';
-      return config;
-    });
-  };
-  setupStartProgress();
-  setupUpdateProgress();
-  setupStopProgress();
-};
-loadProgressBar();
-
-// 下载
-const fileDownloadElem = document.querySelector('.file-download');
-fileDownloadElem!.addEventListener('click', e => {
-  axiosInstance.get('http://yyccyy-01.oss-cn-shenzhen.aliyuncs.com/collection/preview-image/rc-upload-1568974827361-2');
-});
-
-// 上传
-const fileUploadElem = document.querySelector('.file-upload');
-fileUploadElem!.addEventListener('click', e => {
-  const data = new FormData();
-  const fileElem = document.querySelector('input[name="file"]') as HTMLInputElement;
-  if (fileElem.files) {
-    data.append('file', fileElem.files[0]);
-    axiosInstance.post('http://127.0.0.1/upload.php', data);
+axios({
+  method: 'get',
+  url: 'http://127.0.0.1',
+  auth: {
+    username: '123',
+    password: '123'
   }
 });
-

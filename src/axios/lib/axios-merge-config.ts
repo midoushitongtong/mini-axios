@@ -31,7 +31,7 @@ const deepMergeStrategy = (val1: any, val2: any): any => {
 };
 
 // 深度策略的配置属性
-const strategyKeysDeepMerge = ['headers'];
+const strategyKeysDeepMerge = ['headers', 'auth'];
 // 将深度策略的配置属性，存入策略列表
 strategyKeysDeepMerge.forEach(key => {
   strategyKeyList[key] = deepMergeStrategy;

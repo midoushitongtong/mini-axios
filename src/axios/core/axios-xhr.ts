@@ -20,7 +20,8 @@ const axiosXhr = (config: AxiosRequest): AxiosResponsePromise => {
       xsrfCookieName,
       xsrfHeaderName,
       onDownloadProgress,
-      onUploadProgress
+      onUploadProgress,
+      auth
     } = config;
 
     const request = new XMLHttpRequest();
@@ -108,6 +109,11 @@ const axiosXhr = (config: AxiosRequest): AxiosResponsePromise => {
         if (xsrfValue && xsrfHeaderName) {
           headers[xsrfHeaderName] = xsrfValue;
         }
+      }
+
+      // 身份授权配置
+      if (auth) {
+        headers['Authorization'] = 'Basic ' + btoa(auth.username + ':' + auth.password);
       }
 
       Object.keys(headers).forEach(key => {
