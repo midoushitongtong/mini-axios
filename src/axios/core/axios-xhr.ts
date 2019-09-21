@@ -21,7 +21,8 @@ const axiosXhr = (config: AxiosRequest): AxiosResponsePromise => {
       xsrfHeaderName,
       onDownloadProgress,
       onUploadProgress,
-      auth
+      auth,
+      validateStatus
     } = config;
 
     const request = new XMLHttpRequest();
@@ -84,11 +85,12 @@ const axiosXhr = (config: AxiosRequest): AxiosResponsePromise => {
           // 处理状态码
           // 注意: 这里需要延迟 1ms 让其他错误事件先处理[onerror, ontimeout]
           setTimeout(() => {
-            if (response.status >= 200 && response.status < 300) {
+            // 如果没有 validateStatus 函数 或者通过 validateStatus 的验证
+            if (!validateStatus || validateStatus(response.status)) {
               // 正常状态码
               resolve(response);
             } else {
-              reject(createError(`Request failed with status code ${response.status}`, config, null, request, response));
+              reject(createError(`Request failed with response status code ${response.status}`, config, null, request, response));
             }
           }, 1);
         }

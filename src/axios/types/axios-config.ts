@@ -25,13 +25,21 @@ export interface AxiosRequest {
   responseType?: XMLHttpRequestResponseType;
   transformRequest?: AxiosTransform | AxiosTransform[];
   transformResponse?: AxiosTransform | AxiosTransform[];
+  // 取消请求对象
   cancelToken?: CancelToken;
+  // 跨域 cookie 携带
   withCredentials?: boolean;
+  // 跨站请求伪造
   xsrfCookieName?: string;
   xsrfHeaderName?: string;
+  // 下载事件
   onDownloadProgress?: (e: ProgressEvent) => void;
+  // 上传事件
   onUploadProgress?: (e: ProgressEvent) => void;
+  // 身份授权
   auth?: AxiosBasicCredentials;
+  // 响应状态码验证
+  validateStatus?: (status: number) => boolean;
 
   // 用于合并默认配置
   // 字符出索引签名
