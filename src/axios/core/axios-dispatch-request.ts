@@ -1,13 +1,16 @@
 import { AxiosRequest, AxiosResponse, AxiosResponsePromise } from '../types/axios-config';
 import sendXMLHttpRequest from './axios-xhr';
-import { buildRequestURL } from '../lib/axios-url';
+import { buildRequestURL, combineURL, isAbsoluteURL } from '../lib/axios-url';
 import { flattenHeaders } from '../lib/axios-headers';
 import axiosTransform from './axios-transform';
 
 // 将 params 参数转换到 url 上
 const transformRequestURL = (config: AxiosRequest): string => {
-  const { url, params } = config;
-  return buildRequestURL(url!, params);
+  let { url, baseURL, params, paramsSerializer } = config;
+  if (baseURL && !isAbsoluteURL(url!)) {
+    url = combineURL(baseURL, url);
+  }
+  return buildRequestURL(url!, params, paramsSerializer);
 };
 
 // 处理请求配置参数

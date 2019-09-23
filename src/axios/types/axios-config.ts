@@ -40,6 +40,8 @@ export interface AxiosRequest {
   auth?: AxiosBasicCredentials;
   // 响应状态码验证
   validateStatus?: (status: number) => boolean;
+  paramsSerializer?: (params: any) => string;
+  baseURL?: string;
 
   // 用于合并默认配置
   // 字符出索引签名

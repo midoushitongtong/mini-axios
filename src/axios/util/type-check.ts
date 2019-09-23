@@ -19,3 +19,8 @@ export const isPlainObject = (value: any): value is Object => {
 export const isFormData = (val: any) => {
   return typeof val !== 'undefined' && val instanceof FormData;
 };
+
+// 判断值是否为 URLSearchParams 对象, 返回类型保护
+export const isURLSearchParams = (val: any): val is URLSearchParams => {
+  return typeof val !== 'undefined' && val instanceof URLSearchParams;
+};

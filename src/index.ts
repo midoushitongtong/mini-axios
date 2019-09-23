@@ -412,11 +412,34 @@ import qs from 'qs';
 //   }
 // });
 
-axios({
-  method: 'get',
-  url: 'http://127.0.0.1',
-  auth: {
-    username: '123',
-    password: '123'
-  }
+// paramsSerializer test
+// axios({
+//   method: 'get',
+//   url: 'http://127.0.0.1',
+//   auth: {
+//     username: '123',
+//     password: '123'
+//   },
+//   params: new URLSearchParams('a=b&c=d')
+// }).then(res => console.log(res));
+//
+// const instance = axios.create({
+//   paramsSerializer: (params) => {
+//     return qs.stringify(params, {
+//       arrayFormat: 'brackets'
+//     });
+//   }
+// });
+//
+// instance.get('http://127.0.0.1', {
+//   a: 1,
+//   b: 2,
+//   c: ['a', 'b', 'c']
+// }).then(res => console.log(res));
+
+// baseURL test
+const instance = axios.create({
+  baseURL: 'http://127.0.0.1'
 });
+
+instance.get('/index.php');
