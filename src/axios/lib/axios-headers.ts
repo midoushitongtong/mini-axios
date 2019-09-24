@@ -1,6 +1,6 @@
 import { isPlainObject } from '../util/type-check';
 import { Method } from '..';
-import deepMerge from '../util/deep-merge';
+import { deepMerge } from '../util/deep-merge';
 
 // 将请求头的 key 标准化
 const normalizeHeaderName = (headers: any, normalizeHeaderName: string): void => {
@@ -24,7 +24,7 @@ export const buildRequestHeaders = (headers: any, data: any): any => {
   if (isPlainObject(data)) {
     if (headers && !headers['Content-Type']) {
       // 如果有 data 对象，设置默认的 Content-Type
-      headers['Content-Type'] = 'application/json';
+      headers['Content-Type'] = 'application/json;charset=utf-8';
     }
   }
   return headers;
@@ -37,17 +37,16 @@ export const parseResponseHeaders = (headers: string): any => {
     return parseHeaders;
   }
   headers.split('\r\n').forEach(line => {
-    let [key, value] = line.split(':');
+    // ...value 防止有多个 :
+    let [key, ...value] = line.split(':');
     if (key) {
       key = key.trim().toLowerCase();
     }
     if (!key) {
       return;
     }
-    if (value) {
-      value = value.trim();
-    }
-    parseHeaders[key] = value;
+    const newValue = value.join(':').trim();
+    parseHeaders[key] = newValue;
   });
   return parseHeaders;
 };

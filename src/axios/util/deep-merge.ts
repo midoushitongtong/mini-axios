@@ -1,6 +1,6 @@
 import { isPlainObject } from './type-check';
 
-const deepMerge = (...objs: any[]): any => {
+export const deepMerge = (...objs: any[]): any => {
   const result = Object.create(null);
 
   objs.forEach(obj => {
@@ -22,5 +22,3 @@ const deepMerge = (...objs: any[]): any => {
 
   return result;
 };
-
-export default deepMerge;

@@ -16,7 +16,7 @@ export const isPlainObject = (value: any): value is Object => {
 };
 
 // 判断参数是否为 formData 对象，用于上传
-export const isFormData = (val: any) => {
+export const isFormData = (val: any): val is FormData  => {
   return typeof val !== 'undefined' && val instanceof FormData;
 };
 
