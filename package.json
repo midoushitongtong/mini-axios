@@ -1,6 +1,6 @@
 {
-  "name": "ts-axios",
-  "version": "0.0.0",
+  "name": "ts-axios-study",
+  "version": "0.0.1",
   "description": "",
   "keywords": [],
   "main": "dist/ts-axios.umd.js",
@@ -12,7 +12,7 @@
   "author": "midoushitongtong <1092879991@qq.com>",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/MiDouShiTongTong/ts-axios"
   },
   "license": "MIT",
   "engines": {
@@ -35,7 +35,9 @@
     "travis-deploy-once": "travis-deploy-once",
     "webpack-dev": "webpack --mode development",
     "webpack-pro": "webpack --mode production",
-    "dev": "webpack-dev-server --mode development"
+    "dev": "webpack-dev-server --mode development",
+    "prepub":"npm run test:prod && npm run build",
+    "pub": "sh release.sh"
   },
   "lint-staged": {
     "{ignore}/**/*.ts": [
