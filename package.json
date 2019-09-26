@@ -1,6 +1,6 @@
 {
   "name": "ts-axios-study",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "keywords": [],
   "main": "dist/axios.umd.js",
@@ -36,7 +36,7 @@
     "webpack-dev": "webpack --mode development",
     "webpack-pro": "webpack --mode production",
     "dev": "webpack-dev-server --mode development",
-    "prepub":"npm run test:prod && npm run build",
+    "prepub": "npm run test:prod && npm run build",
     "pub": "sh release.sh"
   },
   "lint-staged": {
