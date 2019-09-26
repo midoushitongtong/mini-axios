@@ -2,7 +2,7 @@ import {
   buildRequestHeaders,
   parseResponseHeaders,
   flattenHeaders
-} from '../../src/axios/lib/axios-headers';
+} from '../../src/lib/axios-headers';
 
 describe('lib/headers', () => {
   describe('buildRequestHeaders', () => {

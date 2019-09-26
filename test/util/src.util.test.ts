@@ -4,9 +4,9 @@ import {
   isPlainObject,
   isFormData,
   isURLSearchParams
-} from '../../src/axios/util/type-check';
-import { extend } from '../../src/axios/util/extend';
-import { deepMerge } from '../../src/axios/util/deep-merge';
+} from '../../src/util/type-check';
+import { extend } from '../../src/util/extend';
+import { deepMerge } from '../../src/util/deep-merge';
 
 describe('src/util/*', () => {
   describe('isXXX', () => {

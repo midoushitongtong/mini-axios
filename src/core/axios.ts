@@ -1,5 +1,5 @@
 import { AxiosRequest, AxiosStatic } from '../types/axios-config';
-import AxiosExtend from '../core/axios-extend';
+import AxiosExtend from './axios-extend';
 import axiosDefaultConfig from './axios-default-config';
 import { extend } from '../util/extend';
 import mergeConfig from '../lib/axios-merge-config';

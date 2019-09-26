@@ -1,4 +1,4 @@
-import { AxiosTransform } from '..';
+import { AxiosTransform } from '../index';
 
 const axiosTransform = (data: any, headers: any, fns?: AxiosTransform | AxiosTransform[]): any => {
   if (!fns) {

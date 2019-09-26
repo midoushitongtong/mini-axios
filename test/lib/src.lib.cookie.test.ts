@@ -1,4 +1,4 @@
-import cookie from '../../src/axios/lib/axios-cookie';
+import cookie from '../../src/lib/axios-cookie';
 
 describe('lib/cookie', () => {
   test('should read cookies', () => {

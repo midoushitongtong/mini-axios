@@ -1,4 +1,4 @@
-import { buildRequestData, parseResponseData } from '../../src/axios/lib/axios-data';
+import { buildRequestData, parseResponseData } from '../../src/lib/axios-data';
 
 describe('lib/data', () => {
   describe('buildRequestData', () => {

@@ -1,4 +1,4 @@
-import { buildRequestURL, isAbsoluteURL, combineURL, isURLSameOrigin } from '../../src/axios/lib/axios-url';
+import { buildRequestURL, isAbsoluteURL, combineURL, isURLSameOrigin } from '../../src/lib/axios-url';
 
 describe('lib/url', () => {
   describe('buildRequestURL', () => {

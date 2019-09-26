@@ -1,5 +1,5 @@
 import { isPlainObject } from '../util/type-check';
-import { Method } from '..';
+import { Method } from '../index';
 import { deepMerge } from '../util/deep-merge';
 
 // 将请求头的 key 标准化

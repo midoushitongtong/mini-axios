@@ -4,13 +4,13 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
+    contentBase: path.join(__dirname, 'example/dist'),
     port: 9000
   },
-  entry: path.resolve(__dirname, 'src/index.ts'),
+  entry: path.resolve(__dirname, 'example/src/index.ts'),
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'example/dist')
   },
   resolve: {
     extensions: ['.ts', '.js']
@@ -27,7 +27,7 @@ module.exports = {
   plugins: [
     // 将指定的 html 文件生成一个新的 html 文件
     new HtmlWebpackPlugin({
-      template: 'public/index.html'
+      template: 'example/public/index.html'
     }),
     new CleanWebpackPlugin()
   ]

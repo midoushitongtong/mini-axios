@@ -1,5 +1,5 @@
-import { createError, AxiosError } from '../../src/axios/lib/axios-error';
-import { AxiosRequest, AxiosResponse } from '../../src/axios';
+import { createError, AxiosError } from '../../src/lib/axios-error';
+import { AxiosRequest, AxiosResponse } from '../../src';
 
 describe('lib/error', () => {
   test('should create Error Object to test property in Error Object', () => {

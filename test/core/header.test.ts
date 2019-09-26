@@ -1,4 +1,4 @@
-import axios from '../src/axios/index';
+import axios from '../../src';
 import { getAjaxRequest } from './helper';
 
 function testHeaderValue(headers: any, key: string, val?: string): void {
