@@ -54,7 +54,7 @@ const axiosXhr = (config: AxiosRequest): AxiosResponsePromise => {
 
       // 处理请求超时
       request.ontimeout = () => {
-        reject(createError(`Request failed with Timeout of ${timeout}ms exceed`, config, 'ECONNABORTED', request));
+        reject(createError(`Timeout of ${timeout} ms exceeded`, config, 'ECONNABORTED', request));
       };
 
       // 处理上传事件

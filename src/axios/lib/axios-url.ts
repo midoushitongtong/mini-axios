@@ -7,7 +7,14 @@ interface URLOrigin {
 
 // 转义字符数组
 const encode = (value: string): string => {
-  return encodeURIComponent(value);
+  return encodeURIComponent(value)
+    .replace(/%40/g, '@')
+    .replace(/%3A/gi, ':')
+    .replace(/%24/g, '$')
+    .replace(/%2C/gi, ',')
+    .replace(/%20/g, '+')
+    .replace(/%5B/gi, '[')
+    .replace(/%5D/gi, ']');
 };
 
 // 将参数拼接到 url 字符串
@@ -98,7 +105,7 @@ export const isURLSameOrigin = (requestURL: string): boolean => {
 
 // 判断 url 是否为绝对路径
 export const isAbsoluteURL = (url: string): boolean => {
-  return /(^[a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
+  return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
 };
 
 // 合并 url

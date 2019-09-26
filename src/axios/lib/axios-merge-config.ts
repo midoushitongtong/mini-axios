@@ -1,6 +1,6 @@
 import { AxiosRequest } from '../types/axios-config';
 import { isPlainObject } from '../util/type-check';
-import deepMerge from '../util/deep-merge';
+import { deepMerge } from '../util/deep-merge';
 
 // 已有对应策略的配置属性
 const strategyKeyList = Object.create(null);
